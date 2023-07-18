@@ -1,7 +1,7 @@
 from django.db import models
 
 # Create your models here.
-class Usuario(models.Model):
+class usuario(models.Model):
     nombre = models.CharField(max_length=50)
     apellido = models.CharField(max_length=50)
     contrasena = models.CharField(max_length=50)
@@ -29,4 +29,3 @@ class comentario(models.Model):
 class categoria(models.Model):
     id_articulo = models.ForeignKey("articulo", on_delete=models.PROTECT)
     nombre = models.CharField(max_length=50)
-
