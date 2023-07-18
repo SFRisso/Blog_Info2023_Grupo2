@@ -4,7 +4,7 @@ from django.db import models
 class Usuario(models.Model):
     nombre = models.CharField(max_length=50)
     apellido = models.CharField(max_length=50)
-    contrasena = models.DecimalField()
+    contrasena = models.CharField(max_length=50)
     email = models.EmailField()
     foto_perfil = models.ImageField()
     tipo_usuario = models.DecimalField(max_digits=1, decimal_places=1)
