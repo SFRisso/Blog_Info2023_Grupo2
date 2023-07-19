@@ -3,6 +3,7 @@
 __pycache__/
 *.py[cod]
 *$py.class
+Blog_Info2023_Grupo2\__pycache__
 
 # C extensions
 *.so

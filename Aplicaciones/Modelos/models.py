@@ -6,7 +6,7 @@ class usuario(models.Model):
     apellido = models.CharField(max_length=50)
     contrasena = models.CharField(max_length=50)
     email = models.EmailField()
-    foto_perfil = models.ImageField()
+    foto_perfil = models.CharField(max_length=250)
     tipo_usuario = models.DecimalField(max_digits=1, decimal_places=1)
 
 class articulo(models.Model):
@@ -16,7 +16,7 @@ class articulo(models.Model):
     contenido = models.CharField(max_length=1000)
     localidad = models.CharField(max_length=50)
     fecha_publicacion = models.DateField()
-    imagen_portada = models.ImageField()
+    imagen_portada = models.CharField(max_length=250)
     modalidad = models.CharField(max_length=50)
 
 class comentario(models.Model):
