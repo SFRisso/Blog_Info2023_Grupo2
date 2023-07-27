@@ -27,5 +27,6 @@ class comentario(models.Model):
     contenido = models.CharField(max_length=500)
 
 class categoria(models.Model):
-    id_articulo = models.ForeignKey("articulo", on_delete=models.PROTECT)
+    
     nombre = models.CharField(max_length=50)
+    
