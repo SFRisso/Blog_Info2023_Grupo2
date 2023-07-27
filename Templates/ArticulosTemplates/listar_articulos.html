@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Artículos</title>
+</head>
+<body>
+    <form action="/agregar_articulo/">
+        <input type="submit" value="Agregar Articulo" />
+    </form>
+    
+    {% if articulos %}
+    <h1>Artículos</h1>
+    <ul>
+        {% for articulo in articulos %}
+        <li>{{ articulo.titulo }} - {{ articulo.fecha_publicacion }} </li>
+        {% endfor %}        
+    </ul>
+    {% else %}
+    <p>No hay articulos.</p>
+    {% endif %}
+    
+    <!-- paginacion -->
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+            {% endif %}
+    
+            <span class="current">
+                Pagina {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.
+            </span>
+    
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">Siguiente</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">Ultimo &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+</body>
+</html>
