@@ -18,6 +18,7 @@ class articulo(models.Model):
     fecha_publicacion = models.DateField()
     imagen_portada = models.CharField(max_length=250)
     modalidad = models.CharField(max_length=50)
+    estado = models.BooleanField()
 
 class comentario(models.Model):
     id_usuario = models.ForeignKey("usuario", on_delete=models.PROTECT)
