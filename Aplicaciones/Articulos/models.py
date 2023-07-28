@@ -11,7 +11,7 @@ class Articulo(models.Model):
     contenido = models.CharField(max_length=1000)
     localidad = models.CharField(max_length=50)
     fecha_publicacion = models.DateField(default= timezone.now)
-    imagen_portada = models.ImageField(null=True,blank=True,upload_to="portada")
+    imagen_portada = models.ImageField(upload_to="portada")
     modalidad = models.CharField(max_length=50)
     
     def __str__(self):

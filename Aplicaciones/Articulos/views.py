@@ -5,14 +5,13 @@ from Aplicaciones.Comentarios.models import Comentario
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
 from django.shortcuts import *
-from .forms import ArticuloForm
 
 # Create your views here.
 
 class AgregarArticulo(CreateView):
     model=Articulo
     #field usuario temporalmente hasta que este el registro/login hecho
-    form_class = ArticuloForm
+    fields=["usuario","titulo","contenido","localidad","imagen_portada","modalidad","categoria"]
     template_name= "ArticulosTemplates/agregar_articulo.html"
     success_url= reverse_lazy('Aplicaciones.Articulos:listar_articulos')
 
