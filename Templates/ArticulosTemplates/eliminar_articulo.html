@@ -1,0 +1,11 @@
+<h1>¿Eliminar Articulo?</h1>
+
+<p></p>
+
+<form style='display:inline;' method="POST">
+    {% csrf_token %}
+    <input type="submit" action="" value="Si" /> 
+    
+</form>
+<a href="{% url 'Aplicaciones.Articulos:listar_articulos' %}"  style='display:inline;' ><button>No</button></a>
+

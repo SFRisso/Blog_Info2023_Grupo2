@@ -12,7 +12,11 @@
     <h1>Artículos</h1>
     <ul>
         {% for articulo in articulos %}
-        <li>{{ articulo.titulo }} - {{ articulo.fecha_publicacion }} </li>
+        <li>{{ articulo.titulo }} - {{ articulo.fecha_publicacion }} ||
+            <a href="{% url 'Aplicaciones.Articulos:articulo_detalle' articulo.pk  %}">Ver Detalles y Comentarios</a> ||
+            <a href="{% url 'Aplicaciones.Articulos:modificar_articulo' articulo.pk  %}">Editar</a>||
+            <a href="{% url 'Aplicaciones.Articulos:eliminar_articulo' articulo.pk  %}">Eliminar</a>
+        </li>
         {% endfor %}        
     </ul>
     {% else %}
@@ -23,7 +27,7 @@
     <div class="pagination">
         <span class="step-links">
             {% if page_obj.has_previous %}
-                <a href="?page=1">&laquo; first</a>
+                <a href="?page=1">&laquo; Primero</a>
                 <a href="?page={{ page_obj.previous_page_number }}">Anterior</a>
             {% endif %}
     
