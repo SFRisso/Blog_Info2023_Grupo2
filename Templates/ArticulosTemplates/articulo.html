@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Artículos</title>
+</head>
+<body>
+<h1>{{ articulo.titulo }}</h1>
+<img src="{{ articulo.imagen_portada.url }}" alt="portada" width="250" height="300">
+<p>{{ articulo.contenido }}</p>
+<p>Publicado: {{ articulo.fecha_publicacion }}</p>
+<p>localidad: {{ articulo.localidad }}</p>
+<p>modalidad: {{ articulo.modalidad }}</p>
+<p>categoria: {{ articulo.categoria.nombre }}</p>
+<p>usuario: {{ articulo.usuario.username }}</p>
+<h1>Comentarios</h1>
+<a href="{% url 'Aplicaciones.Comentarios:agregar_comentario' articulo.pk  %}"  style='display:inline;' ><button>Agregar Comentario</button></a>
+
+{% if comentarios %}
+    <ul>
+        {% for comentario in comentarios %}
+        <p>-----------------------</p>
+        <span>
+            <a href="{% url 'Aplicaciones.Comentarios:modificar_comentario' comentario.pk  %}">Editar</a>
+            <a href="{% url 'Aplicaciones.Comentarios:eliminar_comentario' comentario.pk  %}">Eliminar</a> 
+        </span>
+        <p>Usuario: {{ comentario.usuario.username }} - Fecha: {{ comentario.fecha_publicacion }} 
+        {% if comentario.fecha_edicion %}
+         - Ultima Edicion: {{ comentario.fecha_publicacion }}</p>
+        {% endif %}
+        
+        <p> Comentario:{{ comentario.contenido }} </p>         
+        {% endfor %}  
+           
+    </ul>
+    {% else %}
+    <p>No hay comentarios.</p>
+{% endif %}
+<!-- paginacion -->
+<div class="pagination">
+    <span class="step-links">
+        {% if comentarios.has_previous %}
+            <a href="?page=1">&laquo; Primero</a>
+            <a href="?page={{ comentarios.previous_page_number }}">Anterior</a>
+        {% endif %}
+
+        <span class="current">
+            Pagina {{ comentarios.number }} de {{ comentarios.paginator.num_pages }}.
+        </span>
+
+        {% if comentarios.has_next %}
+            <a href="?page={{ comentarios.next_page_number }}">Siguiente</a>
+            <a href="?page={{ comentarios.paginator.num_pages }}">Ultimo &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+</body>
+</html>
