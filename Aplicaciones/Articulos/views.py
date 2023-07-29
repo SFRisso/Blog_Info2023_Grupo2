@@ -48,6 +48,14 @@ class ListarArticulosView(ListView):
             else:
                 # Descendente
                 pass
+        
+        order_by_titulo = self.request.GET.get('order_by_titulo', '')
+        if order_by_titulo:
+            if order_by_titulo.upper() == "ASC": 
+                queryset = Articulo.objects.all().order_by('titulo')
+            else:
+                queryset = Articulo.objects.all().order_by('-titulo')
+        
         qset = []
         
         categoria = self.request.GET.get('categoria', '')

@@ -4,10 +4,8 @@
     <title>Artículos</title>
 </head>
 <body>
-    <form action="/agregar_articulo/">
-        <input type="submit" value="Agregar Articulo" />
-    </form>
     <div>
+        <p>Categorias</p>
         <a href="{% url 'Aplicaciones.Articulos:listar_articulos' %}">Todos los articulos</a>
         {% for categoria in categorias %}
         <a href="{% url 'Aplicaciones.Articulos:listar_articulos' %}?categoria={{categoria.pk}}">{{categoria.nombre}}</a>
@@ -15,8 +13,22 @@
         No hay categorias
         {% endfor %}
     </div>
-    {% if articulos %}
+    <div>
+       <p>Ordernar por fecha</p>
+        <a href="{% url 'Aplicaciones.Articulos:listar_articulos' %}?order_by=DES">Mas Recientes</a>
+        <a href="{% url 'Aplicaciones.Articulos:listar_articulos' %}?order_by=ASC">Mas Antiguos</a>
+    </div> 
+    
+    <div>
+        <p>Ordernar Alfabeticamente</p>
+        <a href="{% url 'Aplicaciones.Articulos:listar_articulos' %}?order_by_titulo=ASC">Ascendente</a> 
+        <a href="{% url 'Aplicaciones.Articulos:listar_articulos' %}?order_by_titulo=DES">Descendiente</a>     
+     </div>
     <h1>Artículos</h1>
+    <form action="/agregar_articulo/">
+        <input type="submit" value="Agregar Articulo" />
+    </form>
+    {% if articulos %}
     <ul>
         {% for articulo in articulos %}
         <li>{{ articulo.titulo }} - {{ articulo.fecha_publicacion }} ||
