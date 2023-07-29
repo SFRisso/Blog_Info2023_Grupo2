@@ -5,6 +5,7 @@ from Aplicaciones.Comentarios.models import Comentario
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
 from django.shortcuts import *
+from django.db.models import Q
 
 # Create your views here.
 
@@ -35,7 +36,33 @@ class ListarArticulosView(ListView):
     template_name = 'ArticulosTemplates/listar_articulos.html'
     context_object_name = "articulos"
     paginate_by = 5
-    ordering = ['-fecha_publicacion']
+    
+    def get_queryset(self):
+        queryset = Articulo.objects.all().order_by('-fecha_publicacion')
+        order_by = self.request.GET.get('order_by', '')
+
+        if order_by:
+            if order_by.upper() == "ASC": 
+                # Ascendente
+                queryset = Articulo.objects.all().order_by('fecha_publicacion')
+            else:
+                # Descendente
+                pass
+        qset = []
+        
+        categoria = self.request.GET.get('categoria', '')
+        
+        if categoria:
+            qset.append(Q(categoria__id=categoria))
+    
+        queryset = queryset.filter(*qset)
+        return queryset
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['categorias'] = Categoria.objects.all()
+        return context
+    
 
 class ArticuloDetalle(DetailView):
     model = Articulo
@@ -54,6 +81,7 @@ class ArticuloDetalle(DetailView):
 
 
 
+   
 
 
 

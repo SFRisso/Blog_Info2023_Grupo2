@@ -1,9 +1,10 @@
 from django.urls import path
-from .views import *
+from .views import * 
 
 
-app_name = 'articulos'
+app_name='Aplicaciones.Usuarios'
 
 urlpatterns = [
-    path('', ListaArticulos.as_view(), name = 'index'),
+    
 ]
+

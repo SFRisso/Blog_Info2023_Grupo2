@@ -7,7 +7,14 @@
     <form action="/agregar_articulo/">
         <input type="submit" value="Agregar Articulo" />
     </form>
-    
+    <div>
+        <a href="{% url 'Aplicaciones.Articulos:listar_articulos' %}">Todos los articulos</a>
+        {% for categoria in categorias %}
+        <a href="{% url 'Aplicaciones.Articulos:listar_articulos' %}?categoria={{categoria.pk}}">{{categoria.nombre}}</a>
+        {% empty %}
+        No hay categorias
+        {% endfor %}
+    </div>
     {% if articulos %}
     <h1>Artículos</h1>
     <ul>
