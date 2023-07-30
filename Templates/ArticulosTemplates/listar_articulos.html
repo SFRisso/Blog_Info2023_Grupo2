@@ -4,6 +4,26 @@
     <title>Artículos</title>
 </head>
 <body>
+    <!-- Navbar & Hero End -->
+
+    {% block barra_busqueda %}
+        <div class="conteiner">
+            <div class="row">
+                <div class="col-md-12 search">
+                    <form method="get">
+                        <div id="custom-search-input">
+                            <div class="input-group col-md-12">
+                                <input type="text" class="form-control" placeholder="Ingrese palabra clave" name="buscar" value="{{ request.GET.buscar}}">
+                                <span class="input-group-list">
+                                    <i class="icon icon-search"></i>
+                                    <button type="submit" class="boton btn-success">Buscar</button>
+                                </span>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+    {% endblock barra_busqueda %}
     <div>
         <p>Categorias</p>
         <a href="{% url 'Aplicaciones.Articulos:listar_articulos' %}">Todos los articulos</a>
@@ -25,9 +45,7 @@
         <a href="{% url 'Aplicaciones.Articulos:listar_articulos' %}?order_by_titulo=DES">Descendiente</a>     
      </div>
     <h1>Artículos</h1>
-    <form action="/agregar_articulo/">
-        <input type="submit" value="Agregar Articulo" />
-    </form>
+    <a href="{% url 'Aplicaciones.Articulos:agregar_articulo' %}">Agregar Articulo</a>
     {% if articulos %}
     <ul>
         {% for articulo in articulos %}

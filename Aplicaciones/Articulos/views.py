@@ -39,27 +39,36 @@ class ListarArticulosView(ListView):
     
     def get_queryset(self):
         queryset = Articulo.objects.all().order_by('-fecha_publicacion')
+       
+       #ordenar por fecha de publicación 
         order_by = self.request.GET.get('order_by', '')
-
         if order_by:
             if order_by.upper() == "ASC": 
-                # Ascendente
                 queryset = Articulo.objects.all().order_by('fecha_publicacion')
             else:
-                # Descendente
                 pass
         
+        #ordernar alfabeticamente
         order_by_titulo = self.request.GET.get('order_by_titulo', '')
         if order_by_titulo:
             if order_by_titulo.upper() == "ASC": 
                 queryset = Articulo.objects.all().order_by('titulo')
             else:
                 queryset = Articulo.objects.all().order_by('-titulo')
+         
+        #barra de busqueda       
+        buscar = self.request.GET.get('buscar')
+        if buscar:
+            queryset = Articulo.objects.filter(
+                Q(titulo__icontains = buscar) |
+                Q(contenido__icontains = buscar) |
+                Q(localidad__icontains = buscar) |
+                Q(modalidad__icontains = buscar)
+            ).distinct()
         
+        #filtrar por categorias
         qset = []
-        
-        categoria = self.request.GET.get('categoria', '')
-        
+        categoria = self.request.GET.get('categoria', '') 
         if categoria:
             qset.append(Q(categoria__id=categoria))
     
