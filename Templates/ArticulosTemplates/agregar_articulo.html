@@ -1,0 +1,5 @@
+<form method="post"  enctype="multipart/form-data">{% csrf_token %}
+    <p>Elegir usuario temporalmente hasta que este el registro/login hecho</p>
+    {{form.as_p }}
+    <input type="submit" value="Guardar">
+</form>
