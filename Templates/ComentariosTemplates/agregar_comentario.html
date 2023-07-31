@@ -1,5 +1,14 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block titulo %}
+<title>Agregar Comentario</title>
+{% endblock %}
+{% block contenido %}
+
+
 <form method="post">{% csrf_token %}
-    <p>Elegir usuario temporalmente hasta que este el registro/login hecho</p>
     {{form.as_p }}
     <input type="submit" value="Guardar">
 </form>
+
+{% endblock %}

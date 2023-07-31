@@ -1,12 +1,19 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Artículos</title>
-</head>
-<body>
-    <!-- Navbar & Hero End -->
 
-    {% block barra_busqueda %}
+{% extends 'base.html' %}
+{% load static %}
+{% block titulo %}
+<title>Inicio</title>
+{% endblock %}
+{% block contenido %}
+
+    {% if user.is_authenticated %}
+
+    <p>Usuario: {{ user.username }} <a href="{% url 'Aplicaciones.Usuarios:cerrar_sesion' %}" class="btn btn-outline-primary">Cerrar Sesion</a></p> 
+    {% else %}
+    <a href="{% url 'Aplicaciones.Usuarios:registrar_usuario' %}" class="btn btn-outline-primary">Registrar</a>
+    <a href="{% url 'Aplicaciones.Usuarios:iniciar_sesion' %}" class="btn btn-outline-primary">Login</a>
+    {% endif %}
+
         <div class="conteiner">
             <div class="row">
                 <div class="col-md-12 search">
@@ -23,7 +30,6 @@
                 </div>
             </div>
         </div>
-    {% endblock barra_busqueda %}
     <div>
         <p>Categorias</p>
         <a href="{% url 'Aplicaciones.Articulos:listar_articulos' %}">Todos los articulos</a>
@@ -31,7 +37,8 @@
         <a href="{% url 'Aplicaciones.Articulos:listar_articulos' %}?categoria={{categoria.pk}}">{{categoria.nombre}}</a>
         {% empty %}
         No hay categorias
-        {% endfor %}
+    {% endfor %}
+
     </div>
     <div>
        <p>Ordernar por fecha</p>
@@ -45,14 +52,18 @@
         <a href="{% url 'Aplicaciones.Articulos:listar_articulos' %}?order_by_titulo=DES">Descendiente</a>     
      </div>
     <h1>Artículos</h1>
+    {% if user.tipo_usuario == 'CO' and user.is_authenticated %}
     <a href="{% url 'Aplicaciones.Articulos:agregar_articulo' %}">Agregar Articulo</a>
+    {% endif %}
     {% if articulos %}
     <ul>
         {% for articulo in articulos %}
         <li>{{ articulo.titulo }} - {{ articulo.fecha_publicacion }} ||
             <a href="{% url 'Aplicaciones.Articulos:articulo_detalle' articulo.pk  %}">Ver Detalles y Comentarios</a> ||
+            {% if user.tipo_usuario == 'CO' and user.is_authenticated %}
             <a href="{% url 'Aplicaciones.Articulos:modificar_articulo' articulo.pk  %}">Editar</a>||
             <a href="{% url 'Aplicaciones.Articulos:eliminar_articulo' articulo.pk  %}">Eliminar</a>
+            {% endif %}
         </li>
         {% endfor %}        
     </ul>
@@ -78,5 +89,4 @@
             {% endif %}
         </span>
     </div>
-</body>
-</html>
+{% endblock %}

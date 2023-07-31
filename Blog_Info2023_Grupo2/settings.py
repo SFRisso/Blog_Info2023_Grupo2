@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+from django.urls import reverse_lazy
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,6 +22,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-tl@^sy1itv%=s5gr!w+&%0^=8%-9-5svua+#din3ba(-)7b-&_'
 AUTH_USER_MODEL = 'Usuarios.Usuario'
+LOGIN_URL          = reverse_lazy('Aplicaciones.Usuarios:iniciar_sesion')
+LOGIN_REDIRECT_URL = reverse_lazy('Aplicaciones.Articulos:listar_articulos')
+LOGOUT_REDIRECT_URL= reverse_lazy('Aplicaciones.Articulos:listar_articulos')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -105,7 +109,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es-ar'
 
 TIME_ZONE = 'America/Buenos_Aires'
 

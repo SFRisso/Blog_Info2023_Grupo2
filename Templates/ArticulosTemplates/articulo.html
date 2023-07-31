@@ -1,9 +1,11 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Artículos</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% load static %}
+{% block titulo %}
+<title>{{ articulo.titulo }}</title>
+{% endblock %}
+{% block contenido %}
+
+
 <h1>{{ articulo.titulo }}</h1>
 <img src="{{ articulo.imagen_portada.url }}" alt="portada" width="250" height="300">
 <p>{{ articulo.contenido }}</p>
@@ -20,8 +22,13 @@
         {% for comentario in comentarios %}
         <p>-----------------------</p>
         <span>
+            {% if user.pk == comentario.usuario.pk and user.is_authenticated and user.tipo_usuario == 'MI' %}
+            <a href="{% url 'Aplicaciones.Comentarios:modificar_comentario' comentario.pk  %}">Editar</a>
+            <a href="{% url 'Aplicaciones.Comentarios:eliminar_comentario' comentario.pk  %}">Eliminar</a>         
+            {% elif user.is_authenticated and user.tipo_usuario == 'CO' %}
             <a href="{% url 'Aplicaciones.Comentarios:modificar_comentario' comentario.pk  %}">Editar</a>
             <a href="{% url 'Aplicaciones.Comentarios:eliminar_comentario' comentario.pk  %}">Eliminar</a> 
+            {% endif %}
         </span>
         <p>Usuario: {{ comentario.usuario.username }} - Fecha: {{ comentario.fecha_publicacion }} 
         {% if comentario.fecha_edicion %}
@@ -53,5 +60,4 @@
         {% endif %}
     </span>
 </div>
-</body>
-</html>
+{% endblock %}

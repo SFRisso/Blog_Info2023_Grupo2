@@ -9,23 +9,24 @@ from django.db.models import Q
 
 # Create your views here.
 
-class AgregarArticulo(CreateView):
+class AgregarArticulo(LoginRequiredMixin, CreateView):
     model=Articulo
-    #field usuario temporalmente hasta que este el registro/login hecho
-    fields=["usuario","titulo","contenido","localidad","imagen_portada","modalidad","categoria"]
+    fields=["titulo","contenido","localidad","imagen_portada","modalidad","categoria"]
     template_name= "ArticulosTemplates/agregar_articulo.html"
     success_url= reverse_lazy('Aplicaciones.Articulos:listar_articulos')
+    def form_valid(self, form):
+        form.instance.usuario = self.request.user
+        return super().form_valid(form)
 
 
-class ModificarArticulo(UpdateView):
+class ModificarArticulo(LoginRequiredMixin, UpdateView):
     model=Articulo
-    #field usuario temporalmente hasta que este el registro/login hecho
     fields=["titulo","contenido","localidad","imagen_portada","modalidad","categoria"]
     template_name= "ArticulosTemplates/agregar_articulo.html"
     success_url= reverse_lazy('Aplicaciones.Articulos:listar_articulos')
 
 
-class EliminarArticulo(DeleteView):
+class EliminarArticulo(LoginRequiredMixin, DeleteView):
     model=Articulo
     template_name= "ArticulosTemplates/eliminar_articulo.html"
     success_url= reverse_lazy('Aplicaciones.Articulos:listar_articulos')

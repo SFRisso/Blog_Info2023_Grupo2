@@ -5,7 +5,6 @@ from django.contrib.auth.models import AbstractUser
 class Usuario(AbstractUser):
     nombre = models.CharField(max_length=50)
     apellido = models.CharField(max_length=50)
-    contrasena = models.CharField(max_length=50)
     email = models.EmailField()
     foto_perfil = models.ImageField(null=True, blank=True, upload_to='usuarios', default='usuarios/user_default.png') 
     
@@ -18,8 +17,8 @@ class Usuario(AbstractUser):
     tipo_usuario = models.CharField(
         max_length=2,
         choices=CHOICES,
-        default=COLABORADOR,
+        default=MIEMBRO,
     )
     
     def __str__(self):
-        return self.nombre + self.apellido
+        return self.username

@@ -1,3 +1,11 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block titulo %}
+<title>Eliminar Articulo</title>
+{% endblock %}
+{% block contenido %}
+
+
 <h1>¿Eliminar Articulo?</h1>
 
 <p></p>
@@ -9,3 +17,4 @@
 </form>
 <a href="{% url 'Aplicaciones.Articulos:listar_articulos' %}"  style='display:inline;' ><button>No</button></a>
 
+{% endblock %}

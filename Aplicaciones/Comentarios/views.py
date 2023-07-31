@@ -6,15 +6,16 @@ from datetime import datetime
 
 # Create your views here.
 
-class AgregarComentario(CreateView):
+class AgregarComentario(LoginRequiredMixin, CreateView):
     model=Comentario
     #field usuario temporalmente hasta que este el registro/login hecho
-    fields=["usuario","contenido",]
+    fields=["contenido"]
     template_name= "ComentariosTemplates/agregar_comentario.html"
     success_url= reverse_lazy('Aplicaciones.Articulos:listar_articulos')
     
     def form_valid(self, form):
         form.instance.articulo = Articulo.objects.get(pk=self.kwargs['pk'])
+        form.instance.usuario = self.request.user
         return super().form_valid(form)
     
     def get_success_url(self):
@@ -25,7 +26,7 @@ class AgregarComentario(CreateView):
     
 
 
-class ModificarComentario(UpdateView):
+class ModificarComentario(LoginRequiredMixin, UpdateView):
     model=Comentario
     #field usuario temporalmente hasta que este el registro/login hecho
     fields=["contenido"]
@@ -43,7 +44,7 @@ class ModificarComentario(UpdateView):
     
 
 
-class EliminarComentario(DeleteView):
+class EliminarComentario(LoginRequiredMixin, DeleteView):
     model=Comentario
     template_name= "ComentariosTemplates/eliminar_comentario.html"
     def get_success_url(self):

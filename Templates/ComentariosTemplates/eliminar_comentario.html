@@ -1,3 +1,11 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block titulo %}
+<title>Eliminar Comentario</title>
+{% endblock %}
+{% block contenido %}
+
+
 <h1>¿Eliminar Comentario?</h1>
 
 <p></p>
@@ -9,3 +17,4 @@
 </form>
 <a href="{% url 'Aplicaciones.Articulos:articulo_detalle' comentario.articulo.pk %}"  style='display:inline;' ><button>No</button></a>
 
+{% endblock %}
