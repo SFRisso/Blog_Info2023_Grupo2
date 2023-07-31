@@ -5,8 +5,8 @@ from django.utils import timezone
 
 # Create your models here.
 class Comentario(models.Model):
-    usuario = models.ForeignKey("Usuarios.Usuario", on_delete=models.PROTECT)
-    articulo = models.ForeignKey("Articulos.Articulo", on_delete=models.PROTECT)
+    usuario = models.ForeignKey("Usuarios.Usuario", on_delete=models.CASCADE)
+    articulo = models.ForeignKey("Articulos.Articulo", on_delete=models.CASCADE)
     fecha_publicacion = models.DateTimeField(default= timezone.now)
     fecha_edicion = models.DateTimeField(null=True)
-    contenido = models.CharField(max_length=500)
+    texto = models.TextField(verbose_name='Comentario')

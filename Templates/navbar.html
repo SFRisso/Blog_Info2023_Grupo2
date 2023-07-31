@@ -1,0 +1,52 @@
+
+{% load static %}
+  <!-- ======= NavBar ======= -->
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+
+      <a href="{% url 'Aplicaciones.Articulos:listar_articulos' %}" class="logo d-flex align-items-center">
+        <img src="{% static 'img/logo.jpg' %}" alt=""> 
+        <h1>Empleos Chaco</h1>
+      </a>
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          {% if user.tipo_usuario == 'CO' and user.is_authenticated %}
+          <li>
+            <a href="{% url 'Aplicaciones.Articulos:agregar_articulo' %}">Agregar Articulo</a>
+            </li>
+            {% endif %}
+          <li><a href="{% url 'Aplicaciones.Articulos:listar_articulos' %}">Todos los articulos</a></li>
+          <li class="dropdown"><a href=""><span>Categorias</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
+            <ul>
+              {% for categoria in categorias %}
+                <li><a href="{% url 'Aplicaciones.Articulos:listar_articulos' %}?categoria={{categoria.pk}}">{{categoria.nombre}}</a></li>
+                {% empty %}
+                <li><a href="{% url 'Aplicaciones.Articulos:listar_articulos' %}">Todos los articulos</a></li>
+                {% endfor %}
+            </ul>
+          </li>
+          
+            <!-- Acerca de -->
+          <li><a href="{% url 'acerca_de' %}">Acerca de</a></li>
+          <!-- Contact -->
+          <li><a href="{% url 'contacto' %}">Contacto</a></li>
+        </ul>
+      </nav>
+
+      <div class="mt-auto">
+        {% if user.is_authenticated %}
+        
+
+        <p><img src="{{ user.foto_perfil.url }}" alt="perfil" width="40" height="40"
+            class="rounded-circle flex-shrink-0 m1"> <b class="text-seconday">{{ user.username }}</b> <a href="{% url 'Aplicaciones.Usuarios:cerrar_sesion' %}" class="btn btn-dark mx-3">   Cerrar Sesion</a></p> 
+        {% else %}
+        <a href="{% url 'Aplicaciones.Usuarios:registrar_usuario' %}" class="btn btn-dark">Registrarse</a>
+        <a href="{% url 'Aplicaciones.Usuarios:iniciar_sesion' %}" class="btn btn-dark">Ingresar</a>
+        {% endif %}
+      </div>
+
+    </div>
+
+  </header>
+  <!-- End Navbar -->

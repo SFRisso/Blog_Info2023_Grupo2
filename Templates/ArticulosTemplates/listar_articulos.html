@@ -6,87 +6,103 @@
 {% endblock %}
 {% block contenido %}
 
-    {% if user.is_authenticated %}
+<main id="main">
+    <header class="masthead">
+    <div class="container position-relative">
+        <div class="row justify-content-center">
+            <div class="col-xl-6">
+                <div class="text-center text-dark">
+                    <h1 class="mb-5 text-white">¡Encontrá tu nuevo empleo!</h1>
 
-    <p>Usuario: {{ user.username }} <a href="{% url 'Aplicaciones.Usuarios:cerrar_sesion' %}" class="btn btn-outline-primary">Cerrar Sesion</a></p> 
-    {% else %}
-    <a href="{% url 'Aplicaciones.Usuarios:registrar_usuario' %}" class="btn btn-outline-primary">Registrar</a>
-    <a href="{% url 'Aplicaciones.Usuarios:iniciar_sesion' %}" class="btn btn-outline-primary">Login</a>
-    {% endif %}
-
-        <div class="conteiner">
-            <div class="row">
-                <div class="col-md-12 search">
-                    <form method="get">
-                        <div id="custom-search-input">
-                            <div class="input-group col-md-12">
-                                <input type="text" class="form-control" placeholder="Ingrese palabra clave" name="buscar" value="{{ request.GET.buscar}}">
-                                <span class="input-group-list">
-                                    <i class="icon icon-search"></i>
-                                    <button type="submit" class="boton btn-success">Buscar</button>
-                                </span>
+                    <!--barra de busqueda -->
+                    <form class="form-subscribe" id="contactForm" data-sb-form-api-token="API_TOKEN">
+                        <div class="row">
+                            <div class="col">
+                                <input type="text" class="form-control form-control-lg" placeholder="Buscar articulo" name="buscar" value="{{ request.GET.buscar}}">
                             </div>
+                            <div class="col-auto"><button class="btn btn-outline-light btn-lg" id="submitButton" type="submit"><i class="bi bi-search"></i></button></div>
                         </div>
+                    
+                    </form>
                 </div>
             </div>
         </div>
-    <div>
-        <p>Categorias</p>
-        <a href="{% url 'Aplicaciones.Articulos:listar_articulos' %}">Todos los articulos</a>
-        {% for categoria in categorias %}
-        <a href="{% url 'Aplicaciones.Articulos:listar_articulos' %}?categoria={{categoria.pk}}">{{categoria.nombre}}</a>
-        {% empty %}
-        No hay categorias
-    {% endfor %}
+    </div>
+</header>
+
+
+<!-- =======  Articulos  ======= -->
+<section id="posts" class="posts">
+    <div class="container" >
+
+        <div class="section-header d-flex justify-content-between align-items-center mb-5">
+          <h2>Articulos</h2>
+          <div>
+            <h5>Ordernar por fecha:</h5>
+             <a href="{% url 'Aplicaciones.Articulos:listar_articulos' %}?order_by=DES" class="btn btn-secondary btn-sm">Mas Recientes</a>
+             <a href="{% url 'Aplicaciones.Articulos:listar_articulos' %}?order_by=ASC" class="btn btn-secondary btn-sm">Mas Antiguos</a>
+         </div> 
+         
+         <div>
+             <h5>Ordernar Alfabeticamente:</h5>
+             <a href="{% url 'Aplicaciones.Articulos:listar_articulos' %}?order_by_titulo=ASC" class="btn btn-secondary btn-sm">Ascendente</a> 
+             <a href="{% url 'Aplicaciones.Articulos:listar_articulos' %}?order_by_titulo=DES" class="btn btn-secondary btn-sm">Descendiente</a>     
+          </div>
+        </div>
 
     </div>
-    <div>
-       <p>Ordernar por fecha</p>
-        <a href="{% url 'Aplicaciones.Articulos:listar_articulos' %}?order_by=DES">Mas Recientes</a>
-        <a href="{% url 'Aplicaciones.Articulos:listar_articulos' %}?order_by=ASC">Mas Antiguos</a>
-    </div> 
-    
-    <div>
-        <p>Ordernar Alfabeticamente</p>
-        <a href="{% url 'Aplicaciones.Articulos:listar_articulos' %}?order_by_titulo=ASC">Ascendente</a> 
-        <a href="{% url 'Aplicaciones.Articulos:listar_articulos' %}?order_by_titulo=DES">Descendiente</a>     
-     </div>
-    <h1>Artículos</h1>
-    {% if user.tipo_usuario == 'CO' and user.is_authenticated %}
-    <a href="{% url 'Aplicaciones.Articulos:agregar_articulo' %}">Agregar Articulo</a>
-    {% endif %}
-    {% if articulos %}
-    <ul>
+
+    <div class="container">
+    <div class="row mb-2">
+        {% if articulos %}
         {% for articulo in articulos %}
-        <li>{{ articulo.titulo }} - {{ articulo.fecha_publicacion }} ||
-            <a href="{% url 'Aplicaciones.Articulos:articulo_detalle' articulo.pk  %}">Ver Detalles y Comentarios</a> ||
-            {% if user.tipo_usuario == 'CO' and user.is_authenticated %}
-            <a href="{% url 'Aplicaciones.Articulos:modificar_articulo' articulo.pk  %}">Editar</a>||
-            <a href="{% url 'Aplicaciones.Articulos:eliminar_articulo' articulo.pk  %}">Eliminar</a>
-            {% endif %}
-        </li>
-        {% endfor %}        
-    </ul>
-    {% else %}
-    <p>No hay articulos.</p>
-    {% endif %}
-    
-    <!-- paginacion -->
-    <div class="pagination">
-        <span class="step-links">
-            {% if page_obj.has_previous %}
-                <a href="?page=1">&laquo; Primero</a>
-                <a href="?page={{ page_obj.previous_page_number }}">Anterior</a>
-            {% endif %}
-    
-            <span class="current">
-                Pagina {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.
-            </span>
-    
-            {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}">Siguiente</a>
-                <a href="?page={{ page_obj.paginator.num_pages }}">Ultimo &raquo;</a>
-            {% endif %}
+        
+        <div class="col-md-6">
+          <div class="card flex-md-row mb-4 box-shadow h-md-250">
+            <div class="card-body d-flex flex-column align-items-start">
+              <strong class="d-inline-block mb-2 text-primary">{{ articulo.categoria.nombre }}</strong>
+              <h3 class="mb-0">
+                <a class="info-primary"  href="{% url 'Aplicaciones.Articulos:articulo_detalle' articulo.pk  %}">{{ articulo.titulo }}</a>
+              </h3>
+              <div class="mb-1 text-muted">{{ articulo.fecha_publicacion }}</div>
+              <p class="card-text mb-auto"><b>Modalidad:</b> {{ articulo.modalidad }}</p>
+              <p class="card-text mb-auto"><b>Localidad:</b> {{ articulo.localidad }}</p>
+              <p class="card-text mb-auto"><b>Autor:</b> {{ articulo.usuario.username }}</p>
+              <a href="{% url 'Aplicaciones.Articulos:articulo_detalle' articulo.pk  %}" >  <u>Ver articulo y Comentarios</u></a>
+            </div>
+            <img class="card-img-right flex-auto d-none d-md-block"  alt="portada" style="width: 200px; height: 250px;" src="{{ articulo.imagen_portada.url }}"" data-holder-rendered="true">
+          </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <p>No hay articulos.</p>
+        {% endif %}
+
+        
+      </div>
+    </div>  
+  </section> <!-- Articulos -->
+
+   <!-- paginacion -->
+   <div class="container" >
+   <div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; Primero</a>
+            <a href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+        {% endif %}
+
+        <span class="current">
+            Pagina {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.
         </span>
-    </div>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">Siguiente</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">Ultimo &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+</div>
+
+</main>
 {% endblock %}

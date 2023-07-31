@@ -16,13 +16,20 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-
+from .views import *
+from django.conf import settings
+from django.conf.urls.static import static
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 
 urlpatterns = [
+    path('acerca_de/', AcercaDe, name='acerca_de'),
+    path('contacto/', Contacto, name='contacto'),
     path('admin/', admin.site.urls),
     path('', include('Aplicaciones.Articulos.urls')),
     path('comentario/', include('Aplicaciones.Comentarios.urls')),
     path('usuario/', include('Aplicaciones.Usuarios.urls')),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
+urlpatterns += staticfiles_urlpatterns()
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -4,60 +4,88 @@
 <title>{{ articulo.titulo }}</title>
 {% endblock %}
 {% block contenido %}
+<main id="main">
+
+    <section class="single-post-content">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 post-content">
+ 
 
 
-<h1>{{ articulo.titulo }}</h1>
-<img src="{{ articulo.imagen_portada.url }}" alt="portada" width="250" height="300">
-<p>{{ articulo.contenido }}</p>
-<p>Publicado: {{ articulo.fecha_publicacion }}</p>
-<p>localidad: {{ articulo.localidad }}</p>
-<p>modalidad: {{ articulo.modalidad }}</p>
-<p>categoria: {{ articulo.categoria.nombre }}</p>
-<p>usuario: {{ articulo.usuario.username }}</p>
-<h1>Comentarios</h1>
-<a href="{% url 'Aplicaciones.Comentarios:agregar_comentario' articulo.pk  %}"  style='display:inline;' ><button>Agregar Comentario</button></a>
-
-{% if comentarios %}
-    <ul>
-        {% for comentario in comentarios %}
-        <p>-----------------------</p>
-        <span>
-            {% if user.pk == comentario.usuario.pk and user.is_authenticated and user.tipo_usuario == 'MI' %}
-            <a href="{% url 'Aplicaciones.Comentarios:modificar_comentario' comentario.pk  %}">Editar</a>
-            <a href="{% url 'Aplicaciones.Comentarios:eliminar_comentario' comentario.pk  %}">Eliminar</a>         
-            {% elif user.is_authenticated and user.tipo_usuario == 'CO' %}
-            <a href="{% url 'Aplicaciones.Comentarios:modificar_comentario' comentario.pk  %}">Editar</a>
-            <a href="{% url 'Aplicaciones.Comentarios:eliminar_comentario' comentario.pk  %}">Eliminar</a> 
+            <!-- ======= Articulo ======= -->
+            <div class="single-post">
+              <div class="post-meta"><span class="date">{{ articulo.categoria.nombre }}</span> <span class="mx-1">&bullet;</span> <span>{{ articulo.fecha_publicacion }}</span><span class="mx-1">&bullet;</span> <span>Publicado por: {{ articulo.usuario.username }}</span></div></div> 
+              <div class="btn-group" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-outline-primary disabled">Modalidad: {{ articulo.modalidad }}</button>
+                <button type="button" class="btn btn-outline-primary disabled">Localidad: {{ articulo.localidad }}</button>
+                {% if user.tipo_usuario == 'CO' and user.is_authenticated %}
+                <a class="btn btn-info" href="{% url 'Aplicaciones.Articulos:modificar_articulo' articulo.pk  %}">Editar</a>
+                <a class="btn btn-info" href="{% url 'Aplicaciones.Articulos:eliminar_articulo' articulo.pk  %}">Eliminar</a>
             {% endif %}
-        </span>
-        <p>Usuario: {{ comentario.usuario.username }} - Fecha: {{ comentario.fecha_publicacion }} 
-        {% if comentario.fecha_edicion %}
-         - Ultima Edicion: {{ comentario.fecha_publicacion }}</p>
-        {% endif %}
-        
-        <p> Comentario:{{ comentario.contenido }} </p>         
-        {% endfor %}  
-           
-    </ul>
-    {% else %}
-    <p>No hay comentarios.</p>
-{% endif %}
-<!-- paginacion -->
-<div class="pagination">
-    <span class="step-links">
-        {% if comentarios.has_previous %}
-            <a href="?page=1">&laquo; Primero</a>
-            <a href="?page={{ comentarios.previous_page_number }}">Anterior</a>
-        {% endif %}
+              </div>
+              
+              <h1 class="mb-5">{{ articulo.titulo }}</h1></h1>
+              <figure class="my-4">
+                <img src="{{ articulo.imagen_portada.url }}" alt="" class="img-fluid">
+              </figure>
+              <p>{{ articulo.contenido }}</p>
+            </div><!-- End Articulo -->
 
-        <span class="current">
-            Pagina {{ comentarios.number }} de {{ comentarios.paginator.num_pages }}.
-        </span>
-
-        {% if comentarios.has_next %}
-            <a href="?page={{ comentarios.next_page_number }}">Siguiente</a>
-            <a href="?page={{ comentarios.paginator.num_pages }}">Ultimo &raquo;</a>
+            <!-- ======= Comentarios ======= -->
+            <div class="comments">
+              <h5 class="comment-title py-4">Comentarios:</h5>
+              {% if comentarios %}
+              {% for comentario in comentarios %}
+              <div class="comment d-flex">
+                <div class="flex-shrink-0">
+                  <div class="avatar avatar-sm rounded-circle">
+                    <img class="avatar-img" src="{{ comentario.usuario.foto_perfil.url }}" alt="" class="img-fluid">
+                  </div>
+                </div>
+                <div class="flex-shrink-1 ms-2 ms-sm-3">
+                  <div class="comment-meta d-flex">
+                    <h6 class="me-2">{{ comentario.usuario.username }}</h6> 
+                   
+                    <span class="text-muted">Fecha: {{ comentario.fecha_publicacion }}
+                        {% if comentario.fecha_edicion %}
+                     - Ultima Edicion: {{ comentario.fecha_publicacion }}
+                     {% endif %}
+                    </span>
+                  </div>
+                  <div class="comment-body">
+                    {{ comentario.texto }}
+                  </div>
+                  <span>
+                    {% if user.pk == comentario.usuario.pk and user.is_authenticated and user.tipo_usuario == 'MI' %}
+                    <a href="{% url 'Aplicaciones.Comentarios:modificar_comentario' comentario.pk  %}">Editar</a>
+                    <a href="{% url 'Aplicaciones.Comentarios:eliminar_comentario' comentario.pk  %}">Eliminar</a>         
+                    {% elif user.is_authenticated and user.tipo_usuario == 'CO' %}
+                    <a href="{% url 'Aplicaciones.Comentarios:modificar_comentario' comentario.pk  %}">Editar</a>
+                    <a href="{% url 'Aplicaciones.Comentarios:eliminar_comentario' comentario.pk  %}">Eliminar</a> 
+                    {% endif %}
+                </span>
+                </div>
+              </div>
+              {% endfor %} 
+            {% else %}
+            <p>No hay comentarios.</p>
         {% endif %}
-    </span>
-</div>
+            </div><!-- End Comentarios -->
+
+            {% include 'ComentariosTemplates/agregar_comentario.html' %}
+
+
+       
+
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main><!-- End #main -->
+
+
+
+
 {% endblock %}

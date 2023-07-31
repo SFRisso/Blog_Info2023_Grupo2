@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block titulo %}
+<title>Contacto</title>
+{% endblock %}
+{% block contenido %}
+<main id="main">
+    <section>
+        <div class="container" >
+          <div class="row">
+            <div class="col-lg-12 text-center mb-5">
+              <h1 class="page-title">Contacto</h1>
+            </div>
+          </div>
+            <div class="row mb-5">
+  
+                <div class="d-md-flex post-entry-2 half">
+                  <a href="#" class="me-4 thumbnail">
+                    <img src="{% static 'img/email.png' %}" alt="" class="img-fluid">
+                  </a>
+                  <div class="ps-md-5 mt-4 mt-md-0">
+                    <div class="post-meta mt-4">Contacto</div>
+                    <h2 class="mb-4 display-4">Emails</h2>
+
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th scope="col">Integrantes</th>
+                            <th scope="col">Emails</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td>Santiago Francisco Risso</td>
+                            <td>santiago.risso2@gmail.com</td>
+                          </tr>
+                          <tr>
+                            <td>Iara Abril Kauffman Cermak</td>
+                            <td>siaraabrilkc@gmail.com</td>
+                          </tr>
+                          <tr>
+                            <td>Christian Martín Fernández</td>
+                            <td>Christianfernandez52@gmail.com</td>
+                          </tr>
+                          <tr>
+                            <td>Bettiana Farias</td>
+                            <td>bettisolfarias30@gmail.com</td>
+                          </tr>
+                          <tr>
+                            <td>Brenda Uria</td>
+                            <td>brenda.uriadg@gmail.com</td>
+                          </tr>
+                          <tr>
+                            <td>Matías Nicolás Riquelme Tirado</td>
+                            <td>matiasriquelme08@gmail.com</td>
+                          </tr>
+                          <tr>
+                            <td>Eliana Gisel Gomez</td>
+                            <td>giselgomez234@gmail.com</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                  </div>
+                </div>
+              </div>
+  
+          </div>
+  
+        </div>
+      </section>
+    <section id="contact" class="contact mb-5">
+      <div class="container">
+
+
+        <div class="row gy-4">
+
+          <div class="col-md-12">
+            <div class="info-item">
+                <i class="bi bi-github"></i>
+              <h3>Github</h3>
+              <a href="https://github.com/SFRisso/Blog_Info2023_Grupo2" class="link-info">https://github.com/SFRisso/Blog_Info2023_Grupo2</a>
+            </div>
+          </div><!-- End Info Item -->
+
+        </div>
+
+      </div>
+    </section>
+
+  </main><!-- End #main -->
+
+  {% endblock %}

@@ -2,12 +2,12 @@ from django.views.generic import *
 from .models import *
 from django.urls import reverse_lazy
 from Aplicaciones.Comentarios.models import Comentario
+from Aplicaciones.Comentarios.forms import ComentarioForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
 from django.shortcuts import *
 from django.db.models import Q
 
-# Create your views here.
 
 class AgregarArticulo(LoginRequiredMixin, CreateView):
     model=Articulo
@@ -36,7 +36,7 @@ class ListarArticulosView(ListView):
     model = Articulo
     template_name = 'ArticulosTemplates/listar_articulos.html'
     context_object_name = "articulos"
-    paginate_by = 5
+    paginate_by = 6
     
     def get_queryset(self):
         queryset = Articulo.objects.all().order_by('-fecha_publicacion')
@@ -82,7 +82,7 @@ class ListarArticulosView(ListView):
         return context
     
 
-class ArticuloDetalle(DetailView):
+'''class ArticuloDetalle(DetailView):
     model = Articulo
     template_name =  'ArticulosTemplates/articulo.html'
     context_object_name = 'articulo'
@@ -92,18 +92,35 @@ class ArticuloDetalle(DetailView):
         comentarios = Comentario.objects.all().filter(articulo=self.kwargs['pk']).order_by('-fecha_publicacion')
         page = self.request.GET.get('page')
         context['comentarios'] = Paginator(comentarios, 2).get_page(page)
-        return context
+        return context'''
+        
+    
+def ArticuloDetalle(request, id):
+    articulo = Articulo.objects.get(id=id)
+    comentarios = Comentario.objects.filter(articulo=id)
+    form = ComentarioForm(request.POST)
+    template_name = 'ArticulosTemplates/articulo.html'
+    
+    #paginacion
+    paginator = Paginator(comentarios, 6)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
 
+    if form.is_valid():
+        if request.user.is_authenticated:
+            aux = form.save(commit=False)
+            aux.articulo = articulo
+            aux.usuario = request.user
+            aux.save()
+            form = ComentarioForm()
+        else:
+            return redirect('Aplicaciones.Usuarios:iniciar_sesion')
 
-
-
-
-
-   
-
-
-
-
-
-
+    context = {
+        'articulo': articulo,
+        'form': form,
+        'comentarios': comentarios,
+        'page_obj': page_obj
+    } 
+    return render(request, template_name, context)
 

@@ -4,6 +4,7 @@ from django.conf import settings
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns 
 from .views import * 
 
+
 app_name='Aplicaciones.Articulos'
 
 urlpatterns = [
@@ -11,7 +12,7 @@ urlpatterns = [
     path("modificar_articulo/<int:pk>",ModificarArticulo.as_view(),name="modificar_articulo"),
     path("eliminar_articulo/<int:pk>",EliminarArticulo.as_view(),name="eliminar_articulo"),
     path("", ListarArticulosView.as_view(), name="listar_articulos"),
-    path("articulo_detalle/<int:pk>", ArticuloDetalle.as_view(), name='articulo_detalle'),
+    path("articulo_detalle/<int:id>", ArticuloDetalle, name='articulo_detalle'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns += staticfiles_urlpatterns()

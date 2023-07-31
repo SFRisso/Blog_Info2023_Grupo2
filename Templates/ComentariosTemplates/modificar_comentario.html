@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block titulo %}
+<title>{{ articulo.titulo }}</title>
+{% endblock %}
+{% block contenido %}
+<div class="container mt-auto">
+    <div class="row">
+            <div class="col-lg-12 text-center mb-5">
+                <h1 class="page-title">-</h1>
+              <h1 class="page-title">Modifcar comentario</h1>
+            </div>
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% for item in form %}
+         <!-- ======= Comments Form ======= -->
+         <div class="row justify-content-center mt-5">
+
+            <div class="col-lg-12">
+              <h5 class="comment-title">Comentar:</h5>
+              <div class="row">
+                <div class="col-lg-6 mb-3">
+                <div class="col-12 mb-3">
+                    {{ item }}
+                    {% if item.help_text %}
+                        {{ item.help_text|safe }}
+                    {% endif %}
+                </div>
+                <div class="col-12">
+                    {% if user.is_authenticated %}
+                  <input type="submit" class="btn btn-primary" value="Guardar Comentario">
+                    {% else %}
+                    <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal"
+                    data-bs-target="#exampleModal">
+                    Guardar Comentario
+                </button>
+                {% endif %}
+            </form>
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Error</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                Usted tiene que iniciar sesión o registrarse para poder opinar
+                            </div>
+                            <div class="modal-footer">
+                                <a class="btn btn-outline-secondary" href="{% url 'Aplicaciones.Usuarios:iniciar_sesion' %}"
+                                    target="_blank">Iniciar sesión</a>
+                                <a class="btn btn-outline-secondary" href="{% url 'Aplicaciones.Usuarios:registrar_usuario' %}"
+                                    target="_blank">Registrarse</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                
+                </div> 
+
+                
+
+                
+                
+                
+              </div>
+            </div>
+          </div><!-- End Comments Form -->
+        <div class="fieldWrapper">
+           
+        </div>
+        <br>
+    </div> </div> </div>
+    {% endfor %}
+    {% endblock %}
