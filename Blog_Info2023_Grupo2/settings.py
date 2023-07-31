@@ -27,7 +27,7 @@ LOGIN_REDIRECT_URL = reverse_lazy('Aplicaciones.Articulos:listar_articulos')
 LOGOUT_REDIRECT_URL= reverse_lazy('Aplicaciones.Articulos:listar_articulos')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -116,6 +116,7 @@ TIME_ZONE = 'America/Buenos_Aires'
 USE_I18N = True
 
 USE_TZ = True
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
