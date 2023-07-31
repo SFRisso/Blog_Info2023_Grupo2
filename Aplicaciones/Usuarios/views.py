@@ -1,5 +1,5 @@
-from django.views.generic import *
-from .models import *
+from django.views.generic import CreateView
+from .models import Usuario
 from django.urls import reverse_lazy
 from .forms import RegistrarUsuarioForm
 

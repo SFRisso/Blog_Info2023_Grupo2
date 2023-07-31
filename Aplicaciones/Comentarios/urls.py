@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import * 
+from .views import AgregarComentario, ModificarComentario, EliminarComentario
 
 
 app_name='Aplicaciones.Comentarios'

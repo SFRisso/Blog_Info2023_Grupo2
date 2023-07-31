@@ -1,11 +1,11 @@
-from django.views.generic import *
-from .models import *
+from django.views.generic import CreateView, UpdateView, DeleteView, ListView, DetailView
+from .models import Articulo, Categoria
 from django.urls import reverse_lazy
 from Aplicaciones.Comentarios.models import Comentario
 from Aplicaciones.Comentarios.forms import ComentarioForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator
-from django.shortcuts import *
+from django.shortcuts import redirect, render
 from django.db.models import Q
 
 

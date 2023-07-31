@@ -1,10 +1,11 @@
-from django.views.generic import *
-from .models import *
+from django.views.generic import UpdateView, DeleteView, CreateView
+from .models import Comentario
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from datetime import datetime
 from django.shortcuts import render
 from .forms import ComentarioForm
+from django.utils import timezone
 
 # Create your views here.
 

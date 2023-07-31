@@ -2,7 +2,7 @@ from django.urls import path
 from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns 
-from .views import * 
+from .views import AgregarArticulo, ModificarArticulo, EliminarArticulo, ListarArticulosView, ArticuloDetalle 
 
 
 app_name='Aplicaciones.Articulos'
